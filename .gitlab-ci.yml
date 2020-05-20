@@ -1,0 +1,21 @@
+stages:
+  - build
+  - publish
+
+build:
+  stage: build
+  tags:
+    - docker
+  script:
+    - docker build . -t $DOCKERHUB/cleversite-deploy:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
+    - docker push $DOCKERHUB/cleversite-deploy:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
+
+publish:
+  stage: publish
+  tags:
+    - docker
+  only:
+    - master
+  script:
+    - docker tag $DOCKERHUB/cleversite-deploy:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID $DOCKERHUB/cleversite-deploy:latest
+    - docker push $DOCKERHUB/cleversite-deploy:latest

@@ -1,0 +1,27 @@
+all:
+  vars:
+    ansible_ssh_become: yes
+    ansible_become: yes
+    ansible_ssh_user: ansible_user
+    ansible_ssh_private_key_file: keys/ansible_user
+    ansible_connection: ssh
+    ansible_become_method: sudo
+  children:
+    web:
+      vars:
+        ansible_ssh_user: ansible
+        git_user: deploy_user
+        git_token: f-BLVAb9Dun5pkAVQiSj
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
+        app_basepath: /var/www/app/web
+        app_version_name: master-12345
+        app_release_commit: 4a1760afa75dabf5f03c3b4bf4343c8d0cbcc1a7
+        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_current_release_path: "{{app_basepath}}/current"
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_domain: web.cleversite.dev.local
+
+      hosts:
+        cs-test-lb01.servicecloud.info: {}
+
+

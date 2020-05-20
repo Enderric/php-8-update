@@ -1,0 +1,4 @@
+- import_tasks: deploy-app.yaml
+  when: task == "deploy"
+- import_tasks: rollback-app.yaml
+  when: task == "rollback"
