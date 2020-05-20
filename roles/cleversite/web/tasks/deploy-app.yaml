@@ -12,7 +12,8 @@
     dest: "{{app_path}}"
     version: "{{app_release_commit}}"
 
-
+- debug:
+    msg: "Deploy to {{app_domain}}"
 - name: Deploy nginx config
   template:
     src: nginx.conf.j2

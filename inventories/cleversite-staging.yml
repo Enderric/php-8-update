@@ -7,7 +7,7 @@ all:
     ansible_connection: ssh
     ansible_become_method: sudo
   children:
-    web:
+    cleversite_web:
       vars:
         ansible_ssh_user: ansible
         git_user: deploy_user
@@ -19,8 +19,7 @@ all:
         app_path: "{{app_basepath}}/{{app_version_name}}"
         app_current_release_path: "{{app_basepath}}/current"
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_domain: web.cleversite.dev.local
-
+        app_domain: web.cleversite.staging.local
       hosts:
         cs-test-lb01.servicecloud.info: {}
 

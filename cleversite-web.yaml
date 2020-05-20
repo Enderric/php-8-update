@@ -1,3 +1,4 @@
-- hosts: web
+- hosts:
+  - cleversite_web
   roles:
   - cleversite/web
