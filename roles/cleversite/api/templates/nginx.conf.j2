@@ -1,0 +1,84 @@
+server {
+	listen			80;
+#	listen			443 ssl;
+#	include			ssl.conf;
+	server_name		{{app_domain}};
+	#charset		koi8-r;
+	access_log		/var/log/nginx/api.cleversite.log	main;
+	root			{{app_current_release_path}};
+	index			index.html index.htm index.php;
+	#error_page		404	/404.html;
+	# redirect server error pages to the static page /50x.html
+	#
+	error_page		500 502 503 504		/50x.html;
+	location		= /50x.html {
+				root	/usr/share/nginx/html;
+	}
+	# запрет файлов .ht
+	location		~ /\.ht {
+				deny		all;
+	}
+	# запрет чтения директории .git
+	location		~ /.git/ {
+				deny		all;
+	}
+	# разрешаем доступ и отключаем логирование
+	location		~ (/robots.txt|/autodiscover.xml) {
+				allow		all;
+				log_not_found	off;
+				access_log	off;
+	}
+#	# страница без слэша перенаправляться 301-м редиректом на страницу со слэшем.
+#	rewrite ^([^.\?]*[^/])$ $1/ permanent;
+#	# убераем index.(php|html) меняем его на слэш
+#	if ($request_uri ~ "^(/(?!payment|bitrix|ajax_files).*)index\.(?:php|html)") {
+#				return	301	$1;
+#	}
+
+	# обработка ядра bitrix
+#	if (!-e $request_filename) {
+#		rewrite ^(.*)$ /bitrix/urlrewrite.php last;
+#	}
+
+
+	# запрет отдавать файл /mts/data.txt
+#	location		= /mts/data.txt {
+#				deny		all;
+#	}
+#	# отдаем картинки и некоторые файлы напрямую из папки
+#	location		~* \.(jpg|jpeg|gif|png|mp3|avi|mov|mpg|mpeg|txt|amr|mmf|wml|wbmp|mid|midi|3gp|css|zip|tgz|gz|rar|arj|cab|exe|dll|bz2|doc|xls|pdf|ppt|tar|bmp|rtf|swf|ico|flv|xml|docx|xlsx|ttf|js|woff|woff2|svg)$ {
+#				root		/var/www/mobile/;
+#				index		index.php;
+#				##expires	7d;
+#				expires		0d;
+#				etag		on;
+#				access_log	off;
+#	}
+
+
+	# основная директория
+	location		/ {
+				index		index.php;
+#				# обработка ядра bitrix
+#				if (!-e $request_filename) {
+#					rewrite ^(.*)$ /bitrix/urlrewrite.php last;
+#				}
+				try_files $uri $uri/ =404;
+	}
+
+	location		~ \.php$ {
+				try_files			$uri =404;
+				fastcgi_pass			unix:/var/run/php-fpm/php-fpm-www.sock;
+				fastcgi_index			index.php;
+				fastcgi_read_timeout		600;
+				fastcgi_param			SCRIPT_FILENAME	$document_root$fastcgi_script_name;
+				fastcgi_param			SCRIPT_NAME	$fastcgi_script_name;
+				fastcgi_buffer_size		128k;
+				fastcgi_buffers			256		16k;
+				fastcgi_busy_buffers_size	256k;
+				fastcgi_temp_file_write_size	256k;
+				include				fastcgi_params;
+	}
+
+
+}

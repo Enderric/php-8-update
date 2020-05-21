@@ -1,0 +1,4 @@
+- hosts:
+  - cleversite_api
+  roles:
+  - cleversite/api

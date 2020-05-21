@@ -9,7 +9,6 @@ all:
   children:
     cleversite_web:
       vars:
-        ansible_ssh_user: ansible
         git_user: deploy_user
         git_token: f-BLVAb9Dun5pkAVQiSj
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
@@ -37,6 +36,23 @@ all:
           - src: upload
             dest: upload
       hosts:
-        cs-test-lb01.servicecloud.info: {}
+        cs-test-lb01.servicecloud.info:
+          ansible_ssh_user: ansible
+    cleversite_api:
+      vars:
+        git_user: deploy_user
+        git_token: 31UtXyw_S-So2up7Q-Uq
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/api.git"
+        app_basepath: /var/www/app/api_cleversite
+        app_version_name: master-12345
+        app_release_commit: master
+        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_current_release_path: "/var/www/api-cleversite"
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_domain: api.cleversite.staging.local
+      hosts:
+        webapi-cs-test-lb01.servicecloud.info:
+          ansible_ssh_host: cs-test-lb01.servicecloud.info
+          ansible_ssh_user: ansible
 
 
