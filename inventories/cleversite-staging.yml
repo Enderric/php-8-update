@@ -6,7 +6,25 @@ all:
     ansible_ssh_private_key_file: keys/ansible_user
     ansible_connection: ssh
     ansible_become_method: sudo
+    envfile: staging.env
+    node_env: production
   children:
+    cleversite_pult:
+      vars:
+        git_user: deploy_user
+        git_token: d2xvHQfs2x8jtyJADeML
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/pult.git"
+        app_basepath: /var/www/app/cleversite-pult
+        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_current_release_path: /var/www/pult
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_version_name: master-12345
+        app_release_commit: master
+        app_domain: pult.cleversite.staging.local
+      hosts:
+        pult-staging:
+          ansible_ssh_user: ansible
+          ansible_ssh_host: cs-test-lb01.servicecloud.info
     cleversite_web:
       vars:
         git_user: deploy_user
@@ -14,7 +32,7 @@ all:
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
         app_basepath: /var/www/app/web
         app_version_name: master-12345
-        app_release_commit: 4a1760afa75dabf5f03c3b4bf4343c8d0cbcc1a7
+        app_release_commit: master
         app_path: "{{app_basepath}}/{{app_version_name}}"
         app_current_release_path: "/var/www/cleversite"
         app_backup_release_path: "{{app_basepath}}/backup"

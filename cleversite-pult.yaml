@@ -1,0 +1,4 @@
+- hosts:
+  - cleversite_pult
+  roles:
+  - cleversite/pult
