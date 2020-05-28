@@ -1,0 +1,24 @@
+[Unit]
+Description=node-static
+After=network-online.target
+
+[Service]
+WorkingDirectory={{app_current_release_path}}
+ExecStart=/usr/bin/node {{app_current_release_path}}/node_modules/gulp/bin/gulp.js watch
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=node-static
+User=nginx
+Group=nginx
+Environment='NODE_ENV=production'
+## limit CPU and RAM quota for our service
+#CPUAccounting=true
+#CPUQuota=10%
+#MemoryAccounting=true
+#MemoryLimit=50M
+
+
+[Install]
+WantedBy=multi-user.target

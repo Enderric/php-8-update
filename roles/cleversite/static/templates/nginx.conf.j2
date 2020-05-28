@@ -1,0 +1,48 @@
+server {
+	listen			80;
+	server_name		{{app_domain}};
+	access_log		/var/log/nginx/static01.log	main;
+	root			{{app_current_release_path}};
+	index			index.html index.htm index.php;
+	#error_page		404	/404.html;
+	# redirect server error pages to the static page /50x.html
+	#
+	error_page		500 502 503 504		/50x.html;
+	location		= /50x.html {
+				root	/usr/share/nginx/html;
+	}
+	# запрет файлов .ht
+	location		~ /\.ht {
+				deny		all;
+	}
+	# запрет чтения директории .git
+	location		~ /.git/ {
+				deny		all;
+	}
+	# разрешаем доступ и отключаем логирование
+	location		~ (/robots.txt|/autodiscover.xml) {
+				allow		all;
+				log_not_found	off;
+				access_log	off;
+	}
+
+	# отдаем картинки и некоторые файлы напрямую из папки
+	location		~* \.(jpg|jpeg|gif|png|mp3|avi|mov|mpg|mpeg|txt|amr|mmf|wml|wbmp|mid|midi|3gp|css|zip|tgz|gz|rar|arj|cab|exe|dll|bz2|doc|xls|pdf|ppt|tar|bmp|rtf|swf|ico|flv|xml|docx|xlsx|ttf|js|woff|woff2|svg)$ {
+				root		{{app_current_release_path}}/;
+				index		index.php;
+				##expires	7d;
+				expires		0d;
+				etag		on;
+				access_log	off;
+	}
+
+
+	# основная директория
+	location		/ {
+				index		index.php;
+				try_files $uri $uri/ =404;
+	}
+
+	#include /etc/nginx/status.conf;
+
+}

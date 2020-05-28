@@ -9,6 +9,61 @@ all:
     envfile: staging.env
     node_env: production
   children:
+    cleversite_codes:
+      vars:
+        git_user: deploy_user
+        git_token: Xy2iDzXMdWxef8Hx2Tdz
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/codes.git"
+        app_basepath: /var/www/app/cleversite-codes
+        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_current_release_path: /var/www/codes
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_version_name: deploy-test
+        app_release_commit: master
+        app_domain: codes.cleversite.staging.local
+      hosts:
+        codes-staging:
+          ansible_ssh_user: ansible
+          ansible_ssh_host: cs-test-lb01.servicecloud.info
+
+    cleversite_static:
+      vars:
+        git_user: deploy_user
+        git_token: 9Wbrx9mXk5msJ2Ys7zMx
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/static.git"
+        app_basepath: /var/www/app/cleversite-static
+        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_current_release_path: /var/www/static
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_version_name: deploy-test
+        app_release_commit: master
+        app_domain: static.cleversite.staging.local
+      hosts:
+        static-staging:
+          ansible_ssh_user: ansible
+          ansible_ssh_host: cs-test-lb01.servicecloud.info
+
+    cleversite_ws:
+      vars:
+        git_user: deploy_user
+        git_token: Sx9sddM65H9QTimfnnKW
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/ws.git"
+        app_basepath: /var/www/app/cleversite-ws
+        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_current_release_path: /var/www/ws
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_version_name: deploy-test
+        app_release_commit: master
+        app_domain: ws.cleversite.staging.local
+      hosts:
+        ws-staging:
+          ansible_ssh_user: ansible
+          ansible_ssh_host: cs-test-lb01.servicecloud.info
+          app_ports:
+            from: 6001
+            to: 6005
+
+
     cleversite_pult:
       vars:
         git_user: deploy_user
@@ -25,6 +80,7 @@ all:
         pult-staging:
           ansible_ssh_user: ansible
           ansible_ssh_host: cs-test-lb01.servicecloud.info
+
     cleversite_web:
       vars:
         git_user: deploy_user

@@ -1,0 +1,12 @@
+- name: Install systemd service
+  template:
+    src: cleversite-codes.service.j2
+    dest: /etc/systemd/system/cleversite-codes.service
+
+- name: Enable and start systemd service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    name: cleversite-codes
+    state: restarted
+

@@ -1,0 +1,4 @@
+- hosts:
+  - cleversite_static
+  roles:
+  - cleversite/static

@@ -1,0 +1,57 @@
+- name: Prepare fs
+  file:
+    path: "{{app_path}}"
+    state: directory
+    mode: "0777"
+    owner: apache
+    group: apache
+
+- name: Get application from git
+  git:
+    repo: "{{app_git_repo}}"
+    dest: "{{app_path}}"
+    version: "{{app_release_commit}}"
+    force: yes
+- name: Install modules
+  shell: npm install
+  args:
+    chdir: "{{app_path}}"
+  become_user: apache
+
+- name: add envfile
+  copy:
+    dest: "{{app_path}}/.env"
+    src: "{{envfile}}"
+
+- name: Directory for logs
+  file:
+    path: "{{app_path}}"
+    state: directory
+    mode: "0777"
+    owner: apache
+    owner: apache
+- stat:
+    path: "{{app_current_release_path}}"
+  register: current_stat
+
+- debug:
+    msg: "{{current_stat}}"
+
+- name: Backup current release
+  when: current_stat.stat.exists == True and current_stat.stat.lnk_target != app_path
+  shell: "cp -P {{app_current_release_path}} {{app_backup_release_path}}"
+
+
+- name: Switch current release
+  file:
+    src: "{{app_path}}"
+    dest: "{{app_current_release_path}}"
+    state: link
+    owner: apache
+    group: apache
+
+- name: Install as service
+  import_tasks: service.yaml
+
+- name: Install nginx configs
+  import_tasks: nginx.yaml
