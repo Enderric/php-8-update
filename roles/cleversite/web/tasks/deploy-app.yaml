@@ -1,4 +1,4 @@
-- name: Prepare filesystem
+- name: Подготавилваю файловую систему
   file:
     path: "{{app_path}}"
     state: directory
@@ -6,21 +6,22 @@
     group: apache
     mode: '0755'
 
-- name: Get application from git
+- name: Получаю приложение из репозитория
   git:
     repo: "{{app_git_repo}}"
     dest: "{{app_path}}"
     version: "{{app_release_commit}}"
     force: yes
 
-- name: Prepare app. Remove directories
+- name: Удаляю ненужные директории
   file:
     state: absent
     path: "{{app_path}}/{{item}}"
   with_items:
     - upload
+    - docker
 
-- name: Link with external data
+- name: Подключаю внешние папки
   file:
     src: "{{app_data_path}}/{{item.src}}"
     dest: "{{app_path}}/{{item.dest}}"
@@ -44,14 +45,20 @@
     - src: upload
       dest: upload
 
+- name: Выкладываю .env файл ({{envfile}})
+  copy:
+    dest: "{{app_basepath}}/.env"
+    src: "{{envfile}}"
+
 - debug:
     msg: "Deploy to {{app_domain}}"
-- name: Deploy nginx config
+
+- name: Обновляю конфиг NGINX
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/conf.d/web.cleversite.conf
 
-- name: Test and reload nginx
+- name: Перезагружаю nginx
   shell: "{{item}}"
   with_items:
     - "nginx -t"
@@ -64,12 +71,12 @@
 - debug:
     msg: "{{current_stat}}"
 
-- name: Backup current release
+- name: Делаю бэкап текущего релиза
   when: current_stat.stat.exists == True and current_stat.stat.lnk_target != app_path
   shell: "cp -P {{app_current_release_path}} {{app_backup_release_path}}"
 
 
-- name: Switch app release
+- name: Выключаю новый релиз
   file:
     src: "{{app_path}}"
     dest: "{{app_current_release_path}}"

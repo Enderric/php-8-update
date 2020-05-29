@@ -13,6 +13,10 @@
     version: "{{app_release_commit}}"
     force: yes
 
+- name: Add envfile
+  copy:
+    dest: "{{app_basepath}}/.env"
+    src: "{{envfile}}"
 
 
 - stat:
