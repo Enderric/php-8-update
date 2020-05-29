@@ -25,7 +25,7 @@
 
 - name: Directory for logs
   file:
-    path: "{{app_path}}"
+    path: "{{app_path}}/log"
     state: directory
     mode: "0777"
     owner: apache
