@@ -23,7 +23,6 @@ all:
         app_domain: codes.cleversite.staging.local
       hosts:
         codes-staging:
-          ansible_ssh_user: ansible
           ansible_ssh_host: cs-test-lb01.servicecloud.info
 
     cleversite_static:
@@ -40,7 +39,6 @@ all:
         app_domain: static.cleversite.staging.local
       hosts:
         static-staging:
-          ansible_ssh_user: ansible
           ansible_ssh_host: cs-test-lb01.servicecloud.info
 
     cleversite_ws:
@@ -57,7 +55,6 @@ all:
         app_domain: ws.cleversite.staging.local
       hosts:
         ws-staging:
-          ansible_ssh_user: ansible
           ansible_ssh_host: cs-test-lb01.servicecloud.info
           app_ports:
             from: 6001
@@ -78,7 +75,6 @@ all:
         app_domain: pult.cleversite.staging.local
       hosts:
         pult-staging:
-          ansible_ssh_user: ansible
           ansible_ssh_host: cs-test-lb01.servicecloud.info
 
     cleversite_web:
@@ -110,8 +106,7 @@ all:
           - src: upload
             dest: upload
       hosts:
-        cs-test-lb01.servicecloud.info:
-          ansible_ssh_user: ansible
+        cs-test-lb01.servicecloud.info: {}
     cleversite_api:
       vars:
         git_user: deploy_user
@@ -127,6 +122,5 @@ all:
       hosts:
         webapi-cs-test-lb01.servicecloud.info:
           ansible_ssh_host: cs-test-lb01.servicecloud.info
-          ansible_ssh_user: ansible
 
 
