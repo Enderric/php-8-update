@@ -83,7 +83,7 @@ all:
         git_token: f-BLVAb9Dun5pkAVQiSj
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
         app_basepath: /var/www/app/web
-        app_version_name: master-12345
+        app_version_name: manual-deploy
         app_release_commit: master
         app_path: "{{app_basepath}}/{{app_version_name}}"
         app_current_release_path: "/var/www/cleversite"

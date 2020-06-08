@@ -71,9 +71,9 @@
 - debug:
     msg: "{{current_stat}}"
 
-- name: Делаю бэкап текущего релиза
-  when: current_stat.stat.exists == True and current_stat.stat.lnk_target != app_path
-  shell: "cp -P {{app_current_release_path}} {{app_backup_release_path}}"
+#- name: Делаю бэкап текущего релиза
+#  when: current_stat.stat.exists == True and current_stat.stat.lnk_target != app_path
+#  shell: "cp -P {{app_current_release_path}} {{app_backup_release_path}}"
 
 
 - name: Выключаю новый релиз
