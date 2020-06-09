@@ -12,6 +12,10 @@
     dest: "{{app_path}}"
     version: "{{app_release_commit}}"
     force: yes
+- name: Устанавливаю зависимости
+  shell: composer install
+  args:
+    chdir: "{{app_path}}/cleversite"
 
 - name: Удаляю ненужные директории
   file:
@@ -20,7 +24,6 @@
   with_items:
     - upload
     - docker
-
 - name: Подключаю внешние папки
   file:
     src: "{{app_data_path}}/{{item.src}}"
