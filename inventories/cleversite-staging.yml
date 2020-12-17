@@ -105,6 +105,12 @@ all:
             dest: callback/wav
           - src: upload
             dest: upload
+        webtemplate:
+          app_basepath: /var/www/app/web-template
+          app_path: "/var/www/app/web-template/{{app_release_name}}"
+          #app_src: "/builds"
+          app_current_release_path: "/var/www/cleversite/bitrix/templates/cleversite_dec2020"
+          
       hosts:
         cs-test-lb01.servicecloud.info: {}
     cleversite_api:
