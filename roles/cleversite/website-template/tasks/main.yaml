@@ -13,14 +13,10 @@
   synchronize:
     src: "{{app_src}}/"
     dest: "{{webtemplate.app_path}}"
-#    src: /tmp/helloworld
-#    dest: /var/www/helloword
     rsync_opts:
       - "--exclude=.git"
       - "--exclude=node_modules"
-#  copy:
-#    src: "{{app_src}}/"
-#    dest: "{{webtemplate.app_path}}"
+
 
 - name: Активирую новый релиз
   file:
