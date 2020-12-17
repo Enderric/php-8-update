@@ -12,8 +12,14 @@
     dest: "{{app_path}}"
     version: "{{app_release_commit}}"
     force: yes
+
+- name: Вычищаю cleversite/vendor
+  file:
+    path: "{{app_path}}/cleversite/vendor"
+    state: absent
+
 - name: Устанавливаю зависимости
-  shell: composer install
+  shell: composer install -n 
   args:
     chdir: "{{app_path}}/cleversite"
 
