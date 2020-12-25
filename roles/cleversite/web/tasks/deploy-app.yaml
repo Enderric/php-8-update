@@ -85,10 +85,15 @@
 #  shell: "cp -P {{app_current_release_path}} {{app_backup_release_path}}"
 
 
-- name: Выключаю новый релиз
+- name: Включаю новый релиз
   file:
     src: "{{app_path}}"
     dest: "{{app_current_release_path}}"
     state: link
     owner: nginx
     group: nginx
+
+- name: Рестартую phpfpm
+  systemd:
+    name: "php-fpm"
+    state: restarted
