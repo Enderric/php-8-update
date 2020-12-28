@@ -25,3 +25,8 @@
     state: link
     owner: apache
     group: apache
+
+- name: Рестартую phpfpm
+  systemd:
+    name: "php-fpm"
+    state: restarted
