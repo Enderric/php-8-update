@@ -26,7 +26,5 @@
     owner: apache
     group: apache
 
-- name: Рестартую phpfpm
-  systemd:
-    name: "php-fpm"
-    state: restarted
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml

@@ -79,6 +79,7 @@ all:
 
     cleversite_web:
       vars:
+        phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
         git_user: deploy_user
         git_token: f-BLVAb9Dun5pkAVQiSj
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
