@@ -25,3 +25,6 @@
     state: link
     owner: apache
     group: apache
+
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml

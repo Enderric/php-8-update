@@ -1,0 +1,8 @@
+- name: Push opcachetool
+  copy:
+    src: utils/cachetool.phar
+    dest: /usr/local/bin/cachetool.phar
+
+- name: Reset opcache
+  shell: "php /usr/local/bin/cachetool.phar opcache:reset --fcgi={{phpfpm_fcgi_socket}}"
+   
