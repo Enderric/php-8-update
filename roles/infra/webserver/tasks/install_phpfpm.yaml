@@ -1,0 +1,75 @@
+- name: Install epel and remi repo
+  yum:
+    name:
+      - "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+      - "https://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+      - yum-utils
+      - unzip
+    state: installed
+
+- name: Enable remi repo
+  shell: yum-config-manager --enable remi-php73
+
+- name: Install php
+  yum:
+    state: installed
+    name:
+      - php-cli.x86_64
+      - php-common.x86_64
+      - php-fedora-autoloader.noarch
+      - php-fpm.x86_64
+      - php-gd.x86_64
+      - php-json.x86_64
+      - php-ldap.x86_64
+      - php-mbstring.x86_64
+      - php-mysqlnd.x86_64
+      - php-odbc.x86_64
+      - php-opcache.x86_64
+      - php-pdo.x86_64
+      - php-pear.noarch
+      - php-pecl-geoip.x86_64
+      - php-pecl-igbinary.x86_64
+      - php-pecl-memcache.x86_64
+      - php-pecl-memcached.x86_64
+      - php-pecl-msgpack.x86_64
+      - php-pecl-yaml.x86_64
+      - php-process.x86_64
+      - php-snmp.x86_64
+      - php-soap.x86_64
+      - php-xml.x86_64
+      - php-xmlrpc.x86_64
+      - php-pecl-zip.x86_64
+- name: Install php-fpm pool config
+  copy:
+    src: www.conf
+    dest: /etc/php-fpm.d/www.conf
+    mode: '0644'
+- name: Install local php config
+  copy:
+    src: php-localsettings.ini
+    dest: /etc/php.d/10-php-localsettings.ini
+
+- name: Enable php-fpm serivce
+  systemd:
+    enabled: true
+    name: php-fpm
+    state: restarted
+
+- name: Copy getcomposer
+  copy:
+    src: getcomposer.sh
+    dest: /usr/local/sbin/getcomposer.sh
+    mode: "0755"
+
+- name: Install composer
+  shell:
+    chdir: /usr/bin
+    cmd: /usr/local/sbin/getcomposer.sh
+    creates: /usr/bin/composer.phar
+
+- name: Move composer.phar to composer
+  shell:
+    cmd: cp /usr/bin/composer.phar /usr/bin/composer
+    creates: /usr/bin/composer
+
+
