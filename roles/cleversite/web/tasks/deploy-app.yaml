@@ -31,6 +31,14 @@
     - upload
     - docker
 
+- name: Устанавливаю права доступа
+  file:
+    path: "{{app_path}}"
+    state: directory
+    owner: apache
+    group: apache
+    recurse: yes
+
 - name: Проверяю внешние папки
   file:
     path: "{{app_data_path}}/{{item.src}}"
