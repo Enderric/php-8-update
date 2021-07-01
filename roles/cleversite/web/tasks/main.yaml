@@ -1,3 +1,4 @@
+
 # Выкатываем релиз
 - import_tasks: deploy-app.yaml
   when: task == "deploy"
@@ -5,8 +6,8 @@
 - import_tasks: make-backup.yaml
   when: task == "deploy"
 # Активируем релиз
-#- import_tasks: make-backup.yaml
-#  when: task == "deploy"
+- import_tasks: activate-release.yaml
+  when: task == "deploy"
 
 
 - import_tasks: rollback-app.yaml
