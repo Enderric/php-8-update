@@ -7,6 +7,8 @@ all:
     ansible_connection: ssh
     ansible_become_method: sudo
     envfile: testing.env
+    envfile_common: common.testing.env
+    envfile_local: .env.testing
     node_env: production
     docker_version: 20.10.6
     docker_compose: yes
@@ -17,10 +19,10 @@ all:
         git_token: Xy2iDzXMdWxef8Hx2Tdz
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/codes.git"
         app_basepath: /var/www/app/cleversite-codes
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/codes
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_version_name: deploy-test
+        app_release_name: deploy-test
         app_release_commit: master
         app_domain: codes.cleversite.testing.local
       hosts:
@@ -33,10 +35,10 @@ all:
         git_token: 9Wbrx9mXk5msJ2Ys7zMx
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/static.git"
         app_basepath: /var/www/app/cleversite-static
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/static
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_version_name: deploy-test
+        app_release_name: deploy-test
         app_release_commit: master
         app_domain: static.cleversite.testing.local
       hosts:
@@ -49,10 +51,10 @@ all:
         git_token: Sx9sddM65H9QTimfnnKW
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/ws.git"
         app_basepath: /var/www/app/cleversite-ws
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/ws
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_version_name: deploy-test
+        app_release_name: deploy-test
         app_release_commit: master
         app_domain: ws.cleversite.testing.local
       hosts:
@@ -69,10 +71,10 @@ all:
         git_token: d2xvHQfs2x8jtyJADeML
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/pult.git"
         app_basepath: /var/www/app/cleversite-pult
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/pult
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_version_name: master-12345
+        app_release_name: master-12345
         app_release_commit: master
         app_domain: pult.cleversite.testing.local
       hosts:
@@ -86,32 +88,34 @@ all:
         git_token: f-BLVAb9Dun5pkAVQiSj
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
         app_basepath: /var/www/app/web
-        app_version_name: manual-deploy
+        app_release_name: manual-deploy
         app_release_commit: master
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: "/var/www/cleversite"
         app_backup_release_path: "{{app_basepath}}/backup"
         app_domain: cleversite.testing.local
-        app_data_path: "{{app_basepath}}/data"
+        app_data_path: "{{app_basepath}}/data"        
         app_external_data:
-          - src: download
+          - src: "{{app_data_path}}/download"
             dest: download
-          - src: exchange
+          - src: "{{app_data_path}}/exchange"
             dest: exchange
-          - src: exchange_archive
+          - src: "{{app_data_path}}/exchange_archive"
             dest: exchange_archive
-          - src: pays
+          - src: "{{app_data_path}}/pays"
             dest: pays
-          - src: users
+          - src: "{{app_data_path}}/users"
             dest: cleversite/user
-          - src: ipts
+          - src: "{{app_data_path}}/ipts"
             dest: callback/wav
-          - src: upload
-            dest: upload
+          - src: "{{app_data_path}}/upload"
+            dest: upload        
+        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"
+        app_current_env_path: "{{app_basepath}}/.env"
         webtemplate:
           app_basepath: /var/www/app/web-template
           app_path: "/var/www/app/web-template/{{app_release_name}}"
-          app_current_release_path: "/var/www/cleversite/bitrix/templates/{{template_name}}"
+          app_current_path: "/var/www/app/web-template/current"
           
       hosts:
         cs-testing01.servicecloud.info: {}
@@ -121,9 +125,9 @@ all:
         git_token: 31UtXyw_S-So2up7Q-Uq
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/api.git"
         app_basepath: /var/www/app/api_cleversite
-        app_version_name: master-12345
+        app_release_name: master-12345
         app_release_commit: master
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: "/var/www/api-cleversite"
         app_backup_release_path: "{{app_basepath}}/backup"
         app_domain: api.cleversite.testing.local

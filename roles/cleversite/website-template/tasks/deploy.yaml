@@ -1,0 +1,29 @@
+- debug:
+    msg: "Src={{app_src}}"
+
+- name: Подготавилваю папку для релиза
+  file:
+    path: "{{webtemplate.app_path}}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: '0755'
+
+- name: Деплою релиз
+  synchronize:
+    src: "{{app_src}}/"
+    dest: "{{webtemplate.app_path}}"
+    rsync_opts:
+      - "--exclude=.git"
+      - "--exclude=node_modules"
+
+- name: Активирую новый релиз
+  file:
+    src: "{{webtemplate.app_path}}"
+    dest: "{{webtemplate.app_current_path}}"
+    state: link
+    owner: apache
+    group: apache
+
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml

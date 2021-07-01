@@ -1,0 +1,20 @@
+- name: Включаю .env
+  file:
+    src: "{{app_basepath}}/{{app_release_name}}.env"
+    dest: "{{app_basepath}}/.env"
+    state: link
+    owner: apache
+    group: apache
+    force: yes
+
+- name: Включаю новый релиз
+  file:
+    src: "{{app_path}}"
+    dest: "{{app_current_release_path}}"
+    state: link
+    owner: apache
+    group: apache
+
+
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml
