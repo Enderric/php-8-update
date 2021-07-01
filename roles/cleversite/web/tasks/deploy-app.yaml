@@ -63,7 +63,7 @@
 
 - name: Подключаю активный шаблон  
   file:
-    src: "{{webtemplate.app_active_release_path}}"
+    src: "{{webtemplate.app_current_path}}"
     dest: "{{app_template_dest}}"
     state: link
     owner: apache
@@ -73,9 +73,18 @@
 
 - name: Выкладываю .env файл ({{envfile}})
   copy:
-    dest: "{{app_basepath}}/{{app_version_name}}.env"
-    src: "{{envfile}}"
+    dest: "{{app_basepath}}/{{app_release_name}}.env"
+    src: "{{app_path}}/{{envfile_local}}"
+    remote_src: yes
 
+
+- name: Дополняю envfile
+  lineinfile:
+    path: "{{app_basepath}}/{{app_release_name}}.env"
+    line: "{{item}}"
+    insertafter: EOF
+  with_file: 
+    - "{{envfile_common}}"
 
 
 

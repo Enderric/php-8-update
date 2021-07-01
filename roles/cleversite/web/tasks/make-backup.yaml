@@ -5,12 +5,28 @@
 - debug: 
     msg: "{{current_release_stat}}"
     
-
 - name: Делаю бэкап активного релиза
   when: current_release_stat.stat.exists == True and current_release_stat.stat.islnk == True
   file:
     src: "{{current_release_stat.stat.lnk_target}}"
     dest: "{{app_backup_release_path}}"
+    state: link
+    owner: apache
+    group: apache
+    force: yes
+
+- stat:
+    path: "{{app_current_env_path}}"
+  register: current_env_stat
+
+- debug: 
+    msg: "{{current_env_stat}}"
+    
+- name: Делаю бэкап активного релиза
+  when: current_env_stat.stat.exists == True and current_env_stat.stat.islnk == True
+  file:
+    src: "{{current_env_stat.stat.lnk_target}}"
+    dest: "{{app_backup_release_path}}.env"
     state: link
     owner: apache
     group: apache

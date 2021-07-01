@@ -1,6 +1,6 @@
 - name: Включаю .env
   file:
-    src: "{{app_basepath}}/{{app_version_name}}.env"
+    src: "{{app_basepath}}/{{app_release_name}}.env"
     dest: "{{app_basepath}}/.env"
     state: link
     owner: apache

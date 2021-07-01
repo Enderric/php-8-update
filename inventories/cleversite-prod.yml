@@ -16,15 +16,13 @@ all:
         phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
         app_basepath: /var/www/app/web
-        app_version_name: manual-deploy
         app_release_name: manual-deploy
         app_release_commit: master
-        app_path: "{{app_basepath}}/{{app_version_name}}"
+        app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: "/var/www/cleversite"
         app_backup_release_path: "{{app_basepath}}/backup"
         app_domain: cleversite.ru
-        app_data_path: "/var/www/app/app-data"
-        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020" 
+        app_data_path: "/var/www/app/app-data"         
         app_external_data:
           - src: "{{app_data_path}}/download"
             dest: download
@@ -39,12 +37,13 @@ all:
           - src: /var/www/ipts
             dest: callback/wav
           - src: "{{app_data_path}}/upload"
-            dest: upload
+            dest: upload        
+        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"
+        app_current_env_path: "{{app_basepath}}/.env"
         webtemplate:
           app_basepath: /var/www/app/web-template          
           app_path: "/var/www/app/web-template/{{app_release_name}}"
-          app_active_release_path: "/var/www/app/web-template/current"
-          app_current_release_path: "/var/www/cleversite/bitrix/templates/cleversite_dec2020"
+          app_current_path: "/var/www/app/web-template/current"
           
       hosts:
         cs-web01.servicecloud.info: {}
