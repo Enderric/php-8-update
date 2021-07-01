@@ -94,19 +94,19 @@ all:
         app_domain: cleversite.staging.local
         app_data_path: "{{app_basepath}}/data"
         app_external_data:
-          - src: download
+          - src: "{{app_data_path}}/download"
             dest: download
-          - src: exchange
+          - src: "{{app_data_path}}/exchange"
             dest: exchange
-          - src: exchange_archive
+          - src: "{{app_data_path}}/exchange_archive"
             dest: exchange_archive
-          - src: pays
+          - src: "{{app_data_path}}/pays"
             dest: pays
-          - src: users
+          - src: "{{app_data_path}}/users"
             dest: cleversite/user
-          - src: ipts
+          - src: "{{app_data_path}}/ipts"
             dest: callback/wav
-          - src: upload
+          - src: "{{app_data_path}}/upload"
             dest: upload
         webtemplate:
           app_basepath: /var/www/app/web-template

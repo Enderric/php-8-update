@@ -17,18 +17,10 @@
       - "--exclude=.git"
       - "--exclude=node_modules"
 
-- name: Создаю ссылку на новый релиз
-  file:
-    src: "{{webtemplate.app_path}}"
-    dest: "{{webtemplate.app_current_link}}"
-    state: link
-    owner: apache
-    group: apache
-
 - name: Активирую новый релиз
   file:
     src: "{{webtemplate.app_path}}"
-    dest: "{{webtemplate.app_current_release_path}}"
+    dest: "{{webtemplate.app_active_release_path}}"
     state: link
     owner: apache
     group: apache

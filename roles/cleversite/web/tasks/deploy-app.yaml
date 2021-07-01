@@ -30,6 +30,7 @@
   with_items:
     - upload
     - docker
+    - .git
 
 - name: Устанавливаю права доступа
   file:
@@ -41,96 +42,40 @@
 
 - name: Проверяю внешние папки
   file:
-    path: "{{app_data_path}}/{{item.src}}"
+    path: "{{item.src}}"
     state: directory
-    mode: "0777"
-    owner: nginx
-    group: nginx
+    mode: "0775"
+    owner: apache
+    group: apache
     force: yes
-  with_items:
-    - src: download
-      dest: download
-    - src: exchange
-      dest: exchange
-    - src: exchange_archive
-      dest: exchange_archive
-    - src: pays
-      dest: pays
-    - src: users
-      dest: cleversite/user
-    - src: ipts
-      dest: callback/wav
-    - src: upload
-      dest: upload
+  with_items: "{{app_external_data}}"    
+
 - name: Подключаю внешние папки
   file:
-    src: "{{app_data_path}}/{{item.src}}"
+    src: "{{item.src}}"
     dest: "{{app_path}}/{{item.dest}}"
     state: link
-    owner: nginx
-    group: nginx
+    owner: apache
+    group: apache
     force: yes
-  with_items:
-    - src: download
-      dest: download
-    - src: exchange
-      dest: exchange
-    - src: exchange_archive
-      dest: exchange_archive
-    - src: pays
-      dest: pays
-    - src: users
-      dest: cleversite/user
-    - src: ipts
-      dest: callback/wav
-    - src: upload
-      dest: upload
+  with_items: "{{app_external_data}}"
+
+
+- name: Подключаю активный шаблон  
+  file:
+    src: "{{webtemplate.app_active_release_path}}"
+    dest: "{{app_template_dest}}"
+    state: link
+    owner: apache
+    group: apache
+    force: yes
+
 
 - name: Выкладываю .env файл ({{envfile}})
   copy:
-    dest: "{{app_basepath}}/.env"
+    dest: "{{app_basepath}}/{{app_version_name}}.env"
     src: "{{envfile}}"
 
-- debug:
-    msg: "Deploy to {{app_domain}}"
-
-- name: Создаю папки для логов NGINX
-  file:
-    path: /var/log/nginx/cleversite
-    state: directory
-    mode: "0777"
-
-- name: Обновляю конфиг NGINX
-  template:
-    src: nginx.conf.j2
-    dest: /etc/nginx/conf.d/web.cleversite.conf
-
-- name: Перезагружаю nginx
-  shell: "{{item}}"
-  with_items:
-    - "nginx -t"
-    - "nginx -s reload"
-
-- stat:
-    path: "{{app_current_release_path}}"
-  register: current_stat
-
-- debug:
-    msg: "{{current_stat}}"
-
-#- name: Делаю бэкап текущего релиза
-#  when: current_stat.stat.exists == True and current_stat.stat.lnk_target != app_path
-#  shell: "cp -P {{app_current_release_path}} {{app_backup_release_path}}"
 
 
-- name: Включаю новый релиз
-  file:
-    src: "{{app_path}}"
-    dest: "{{app_current_release_path}}"
-    state: link
-    owner: nginx
-    group: nginx
 
-
-- name: Сбрасываю OpCache
-  import_tasks: tasks/webserver/php-resetopcache.yml
