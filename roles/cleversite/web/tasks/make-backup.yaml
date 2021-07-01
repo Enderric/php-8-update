@@ -22,10 +22,30 @@
 - debug: 
     msg: "{{current_env_stat}}"
     
-- name: Делаю бэкап активного релиза
+- name: Делаю бэкап env активного релиза
   when: current_env_stat.stat.exists == True and current_env_stat.stat.islnk == True
   file:
     src: "{{current_env_stat.stat.lnk_target}}"
+    dest: "{{app_backup_release_path}}.env"
+    state: link
+    owner: apache
+    group: apache
+    force: yes
+
+- name: Делаю бэкап env активного релиза. Копирую файл
+  when: current_env_stat.stat.exists == True and current_env_stat.stat.isreg == True
+  file:
+    src: "{{current_env_stat.stat.lnk_target}}"
+    dest: "{{app_backup_release_path}}.file.env"
+    state: present
+    owner: apache
+    group: apache
+    force: yes
+
+- name: Делаю бэкап env активного релиза. Копирую файл
+  when: current_env_stat.stat.exists == True and current_env_stat.stat.isreg == True
+  file:
+    src: "{{app_backup_release_path}}.file.env"
     dest: "{{app_backup_release_path}}.env"
     state: link
     owner: apache
