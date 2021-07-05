@@ -7,6 +7,8 @@ all:
     ansible_connection: ssh
     ansible_become_method: sudo
     envfile: prod.env
+    envfile_common: common.prod.env
+    envfile_local: .env.prod
     node_env: production
   children:    
     cleversite_web:
