@@ -71,7 +71,7 @@
     force: yes
 
 
-- name: Выкладываю .env файл ({{envfile}})
+- name: Выкладываю .env файл из {{app_path}}/{{envfile_local}}
   copy:
     dest: "{{app_basepath}}/{{app_release_name}}.env"
     src: "{{app_path}}/{{envfile_local}}"

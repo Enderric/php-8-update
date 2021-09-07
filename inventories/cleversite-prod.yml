@@ -49,5 +49,41 @@ all:
           
       hosts:
         cs-web01.servicecloud.info: {}
-
-
+    cleversite_web_public:
+      vars:
+        phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
+        git_user: deploy_user
+        git_token: zAyvusLvrrJv_vPy94xN
+        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/public-site.git"
+        app_basepath: /var/www/app/web-public
+        app_release_name: manual-deploy
+        app_release_commit: master
+        app_path: "{{app_basepath}}/{{app_release_name}}"
+        app_current_release_path: "/var/www/cleversite-web-public"
+        app_backup_release_path: "{{app_basepath}}/backup"
+        app_domain: cleversite.testing.local
+        app_data_path: "/var/www/app/web/data"        
+        app_external_data:
+          - src: "{{app_data_path}}/download"
+            dest: download
+          - src: "{{app_data_path}}/exchange"
+            dest: exchange
+          - src: "{{app_data_path}}/exchange_archive"
+            dest: exchange_archive
+          - src: "{{app_data_path}}/pays"
+            dest: pays
+          - src: "{{app_data_path}}/users"
+            dest: cleversite/user
+          - src: "{{app_data_path}}/ipts"
+            dest: callback/wav
+          - src: "{{app_data_path}}/upload"
+            dest: upload        
+        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"
+        app_current_env_path: "{{app_basepath}}/.env"
+        webtemplate:
+          app_basepath: /var/www/app/web-template
+          app_path: "/var/www/app/web-template/{{app_release_name}}"
+          app_current_path: "/var/www/app/web-template/current"
+      hosts:
+        cs-web02.servicecloud.info: {}
+        cs-web01.servicecloud.info: {}
