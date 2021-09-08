@@ -62,7 +62,7 @@ all:
         app_current_release_path: "/var/www/cleversite-web-public"
         app_backup_release_path: "{{app_basepath}}/backup"
         app_domain: cleversite.testing.local
-        app_data_path: "/var/www/app/web/data"        
+        app_data_path: "/var/www/app/app-data-public"        
         app_external_data:
           - src: "{{app_data_path}}/download"
             dest: download
