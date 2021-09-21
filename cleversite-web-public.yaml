@@ -1,4 +1,4 @@
 - hosts:
   - cleversite_web_public
   roles:
-  - cleversite/web
+  - cleversite/web-public
