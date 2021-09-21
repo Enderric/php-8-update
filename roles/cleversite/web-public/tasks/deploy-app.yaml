@@ -66,7 +66,7 @@
 - name: Выкладываю .env файл из {{envfile_local}}
   copy:
     dest: "{{app_basepath}}/{{app_release_name}}.env"
-    src: "{envfile_local}}"    
+    src: "{{envfile_local}}"    
 
 
 - name: Дополняю envfile
