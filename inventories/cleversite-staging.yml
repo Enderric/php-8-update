@@ -133,7 +133,7 @@ all:
         app_current_release_path: "/var/www/cleversite-web-public"
         app_backup_release_path: "{{app_basepath}}/backup"
         app_domain: cleversite.staging.local
-        app_data_path: "/var/www/app/web/data"        
+        app_data_path: "/var/www/app/web/web-public-data"        
         app_external_data:
           - src: "{{app_data_path}}/download"
             dest: download
@@ -148,13 +148,9 @@ all:
           - src: "{{app_data_path}}/ipts"
             dest: callback/wav
           - src: "{{app_data_path}}/upload"
-            dest: upload        
-        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"
+            dest: upload                
         app_current_env_path: "{{app_basepath}}/.env"
-        webtemplate:
-          app_basepath: /var/www/app/web-template
-          app_path: "/var/www/app/web-template/{{app_release_name}}"
-          app_current_path: "/var/www/app/web-template/current"
+        envfile_common: common-web-public.staging.env
           
       hosts:
         cs-test-lb01.servicecloud.info: {}

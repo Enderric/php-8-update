@@ -62,15 +62,6 @@
   with_items: "{{app_external_data}}"
 
 
-- name: Подключаю активный шаблон  
-  file:
-    src: "{{webtemplate.app_current_path}}"
-    dest: "{{app_template_dest}}"
-    state: link
-    owner: apache
-    group: apache
-    force: yes
-
 
 - name: Выкладываю .env файл из {{app_path}}/{{envfile_local}}
   copy:
