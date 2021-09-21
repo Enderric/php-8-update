@@ -16,13 +16,13 @@
 
 - name: Вычищаю cleversite/vendor
   file:
-    path: "{{app_path}}/www/cleversite/vendor"
+    path: "{{app_path}}/cleversite/vendor"
     state: absent
 
 - name: Устанавливаю зависимости
   shell: composer install -n 
   args:
-    chdir: "{{app_path}}/www/cleversite"
+    chdir: "{{app_path}}/cleversite"
 
 - name: Удаляю ненужные директории
   file:
