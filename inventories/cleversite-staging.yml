@@ -153,7 +153,8 @@ all:
         envfile_common: common-web-public.staging.env
           
       hosts:
-        cs-test-lb01.servicecloud.info: {}
+        web-public-staging.servicecloud.info:
+          ansible_ssh_host: cs-test-lb01.servicecloud.info
     cleversite_api:
       vars:
         git_user: deploy_user
