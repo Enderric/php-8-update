@@ -9,7 +9,7 @@
 
 - name: Включаю новый релиз
   file:
-    src: "{{app_path}}/www"
+    src: "{{app_path}}"
     dest: "{{app_current_release_path}}"
     state: link
     owner: apache
