@@ -155,6 +155,7 @@ all:
       hosts:
         web-public-staging.servicecloud.info:
           ansible_ssh_host: cs-test-lb01.servicecloud.info
+          ansible_host: cs-test-lb01.servicecloud.info
     cleversite_api:
       vars:
         git_user: deploy_user
