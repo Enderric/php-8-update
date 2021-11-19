@@ -1,6 +1,6 @@
 - name: Подготавилваю файловую систему
   file:
-    path: "{{app_path}}"
+    path: "{{ app_path }}"
     state: directory
     owner: apache
     group: apache
@@ -8,26 +8,27 @@
 
 - name: Выкатываю релиз
   synchronize:
-    src: "{{app_src}}/"
-    dest: "{{app_path}}"
+    src: "{{ app_src }}/"
+    dest: "{{ app_path }}"
+    use_ssh_args: yes
     rsync_opts:
       - "--exclude=.git"
       - "--exclude=node_modules"
 
 - name: Вычищаю cleversite/vendor
   file:
-    path: "{{app_path}}/cleversite/vendor"
+    path: "{{ app_path }}/cleversite/vendor"
     state: absent
 
 - name: Устанавливаю зависимости
   shell: composer install -n 
   args:
-    chdir: "{{app_path}}/cleversite"
+    chdir: "{{ app_path }}/cleversite"
 
 - name: Удаляю ненужные директории
   file:
     state: absent
-    path: "{{app_path}}/{{item}}"
+    path: "{{ app_path }}/{{ item }}"
   with_items:
     - upload
     - docker
@@ -35,7 +36,7 @@
 
 - name: Устанавливаю права доступа
   file:
-    path: "{{app_path}}"
+    path: "{{ app_path }}"
     state: directory
     owner: apache
     group: apache
@@ -43,23 +44,23 @@
 
 - name: Проверяю внешние папки
   file:
-    path: "{{item.src}}"
+    path: "{{ item.src }}"
     state: directory
     mode: "0775"
     owner: apache
     group: apache
     force: yes
-  with_items: "{{app_external_data}}"    
+  with_items: "{{ app_external_data }}"    
 
 - name: Подключаю внешние папки
   file:
-    src: "{{item.src}}"
-    dest: "{{app_path}}/{{item.dest}}"
+    src: "{{ item.src }}"
+    dest: "{{ app_path }}/{{ item.dest }}"
     state: link
     owner: apache
     group: apache
     force: yes
-  with_items: "{{app_external_data}}"
+  with_items: "{{ app_external_data }}"
 
 
 
