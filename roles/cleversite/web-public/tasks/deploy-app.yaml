@@ -63,25 +63,31 @@
   with_items: "{{ app_external_data }}"
 
 
-
-
-- name: Проверяю существование envfile {{ app_path }}/{{ envfile_local }}
-  stat:
-    path: "{{ app_path }}/{{ envfile_local }}"
-  register: envfile_local_stat
-
-- name: Выкладываю .env файл из {{ app_path }}/{{ envfile_local }}
-  when: envfile_local_stat.stat.exists and envfile_local_stat.stat.isfile
+- name: Выкладываю .env файл из {{ envfile_src }}
   copy:
+    src: "{{ envfile_src }}"
     dest: "{{ app_basepath }}/{{ app_release_name }}.env"
-    src: "{{ app_path }}/{{ envfile_local }}"
-    remote_src: yes
     mode: "0644"
     owner: apache
     group: apache
+    
+# - name: Проверяю существование envfile {{ app_path }}/{{ envfile_local }}
+#   stat:
+#     path: "{{ app_path }}/{{ envfile_local }}"
+#   register: envfile_local_stat
+
+# - name: Выкладываю .env файл из {{ app_path }}/{{ envfile_local }}
+#   when: envfile_local_stat.stat.exists and envfile_local_stat.stat.isfile
+#   copy:
+#     dest: "{{ app_basepath }}/{{ app_release_name }}.env"
+#     src: "{{ app_path }}/{{ envfile_local }}"
+#     remote_src: yes
+#     mode: "0644"
+#     owner: apache
+#     group: apache
 
 - name: Дополняю envfile
-  when: envfile_local_stat.stat.exists and envfile_local_stat.stat.isfile
+#  when: envfile_local_stat.stat.exists and envfile_local_stat.stat.isfile
   lineinfile:
     path: "{{ app_basepath }}/{{ app_release_name }}.env"
     line: "{{ item }}"
