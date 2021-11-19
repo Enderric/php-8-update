@@ -142,9 +142,7 @@ all:
           - src: "{{app_data_path}}/exchange_archive"
             dest: exchange_archive
           - src: "{{app_data_path}}/pays"
-            dest: pays
-          - src: "{{app_data_path}}/users"
-            dest: cleversite/user
+            dest: pays          
           - src: "{{app_data_path}}/ipts"
             dest: callback/wav
           - src: "{{app_data_path}}/upload"
