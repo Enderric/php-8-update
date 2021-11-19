@@ -64,19 +64,30 @@
 
 
 
-- name: Выкладываю .env файл из {{envfile_local}}
-  copy:
-    dest: "{{app_basepath}}/{{app_release_name}}.env"
-    src: "{{envfile_local}}"    
 
+- name: Проверяю существование envfile {{ app_path }}/{{ envfile_local }}
+  stat:
+    path: "{{ app_path }}/{{ envfile_local }}"
+  register: envfile_local_stat
+
+- name: Выкладываю .env файл из {{ app_path }}/{{ envfile_local }}
+  when: envfile_local_stat.stat.exists and envfile_local_stat.stat.isfile
+  copy:
+    dest: "{{ app_basepath }}/{{ app_release_name }}.env"
+    src: "{{ app_path }}/{{ envfile_local }}"
+    remote_src: yes
+    mode: "0644"
+    owner: apache
+    group: apache
 
 - name: Дополняю envfile
+  when: envfile_local_stat.stat.exists and envfile_local_stat.stat.isfile
   lineinfile:
-    path: "{{app_basepath}}/{{app_release_name}}.env"
-    line: "{{item}}"
+    path: "{{ app_basepath }}/{{ app_release_name }}.env"
+    line: "{{ item }}"
     insertafter: EOF
   with_file: 
-    - "{{envfile_common}}"
+    - "{{ envfile_common }}"
 
 
 
