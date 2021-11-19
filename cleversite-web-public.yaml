@@ -3,4 +3,4 @@
   roles:
   - cleversite/web-public
   vars:
-    envfile_src: "{{ app_src }}/../{{ envfile_local }}"
+    envfile_src: "{{ envfile_local }}"
