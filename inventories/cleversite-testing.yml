@@ -142,8 +142,6 @@ all:
             dest: exchange_archive
           - src: "{{app_data_path}}/pays"
             dest: pays
-          - src: "{{app_data_path}}/users"
-            dest: cleversite/user
           - src: "{{app_data_path}}/ipts"
             dest: callback/wav
           - src: "{{app_data_path}}/upload"
@@ -154,6 +152,7 @@ all:
       hosts:
         web-public-testing01.servicecloud.info:
           ansible_ssh_host: cs-testing01.servicecloud.info
+          ansible_host: cs-testing01.servicecloud.info
     cleversite_api:
       vars:
         git_user: deploy_user
