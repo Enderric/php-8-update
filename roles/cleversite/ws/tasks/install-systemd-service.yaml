@@ -1,0 +1,15 @@
+- name: Install systemd unit
+  template:
+    src: cleversite-ws.service
+    dest: "/etc/systemd/system/cleversite-ws@.service"
+    owner: root
+    group: root 
+    mode: "0644"
+
+- name: Reload systemd configs
+  systemd:
+    daemon_reload: yes
+    name: "cleversite-ws@{{ item }}.service"
+    enabled: yes
+    state: restarted
+  with_items: "{{ ws_ports }}"

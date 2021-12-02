@@ -60,9 +60,8 @@ all:
       hosts:
         ws-staging:
           ansible_ssh_host: cs-testing01.servicecloud.info
-          app_ports:
-            from: 6001
-            to: 6005
+          ws_ports: 
+            - 6012          
 
 
     cleversite_pult:
