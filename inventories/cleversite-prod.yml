@@ -70,10 +70,10 @@ all:
             dest: exchange_archive
           - src: "{{app_data_path}}/pays"
             dest: pays
-          - src: "{{app_data_path}}/users"
-            dest: cleversite/user
-          - src: "{{app_data_path}}/ipts"
-            dest: callback/wav
+          #- src: "{{app_data_path}}/users"
+          #  dest: cleversite/user
+          #- src: "{{app_data_path}}/ipts"
+          #  dest: callback/wav
           - src: "{{app_data_path}}/upload"
             dest: upload                
         app_current_env_path: "{{app_basepath}}/.env"
