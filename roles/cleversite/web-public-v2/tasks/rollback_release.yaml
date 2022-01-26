@@ -1,0 +1,17 @@
+- name: Проверяю бэкап
+  stat:
+    path: "{{ backup_release_path }}"
+  register: backup_release_stat
+
+- debug: 
+    msg: "{{ backup_release_stat }}"
+
+- name: Откатываю релиз
+  when: backup_release_stat.stat.exists == True and backup_release_stat.stat.islnk == True
+  file:
+    src: "{{ backup_release_stat.stat.lnk_target }}"
+    dest: "{{ current_release_path }}"
+    state: link
+    owner: apache
+    group: apache
+    force: yes

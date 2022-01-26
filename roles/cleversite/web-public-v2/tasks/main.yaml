@@ -1,0 +1,30 @@
+- include_tasks: deploy_release.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    deploy_src: "{{ app.deploy_src }}"
+    deploy_path: "{{ app.prefix }}{{ app.namespace }}{{ app.base_path }}/releases/{{ release_name }}"
+    remove_dirs: "{{ app.remove_dirs }}"
+    external_data: "{{ app.external_data }}"
+    external_data_path: "{{ app.external_data_path }}"
+
+
+- include_tasks: backup_current_release.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    current_release_path: "{{ app.prefix }}{{ app.namespace }}{{ app.active_release_path }}"
+    backup_release_path: "{{ app.prefix }}{{ app.namespace }}{{ app.base_path }}/releases/backup"
+
+- include_tasks: activate_release.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    current_release_path: "{{ app.prefix }}{{ app.namespace }}{{ app.active_release_path }}"
+    release_path: "{{ app.prefix }}{{ app.namespace }}{{ app.base_path }}/releases/{{ release_name }}/www"
+
+- include_tasks: rollback_release.yaml
+  when: task is defined and task == 'rollback'
+  vars:
+    current_release_path: "{{ app.prefix }}{{ app.namespace }}{{ app.active_release_path }}"
+    backup_release_path: "{{ app.prefix }}{{ app.namespace }}{{ app.base_path }}/releases/backup"
+
+
+

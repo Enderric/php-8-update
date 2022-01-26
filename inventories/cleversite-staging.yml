@@ -12,6 +12,32 @@ all:
     node_env: production
     docker_version: 20.10.6
     docker_compose: yes
+    # cleversite_web_public:
+      # deploy_src: "{{ app_src }}"
+      # prefix: /var/www/
+      # base_path: /app/web-public
+      # namespace: "{{ app_namespace.replace('.','') if app_namespace is defined else '' }}"
+      # data_path: "/var/www/app/web-public-data"
+      # active_release_path: "/cleversite-web-public"
+      # remove_dirs:
+      #   - upload
+      #   - docker
+      #   - .git
+      # external_data_path: /var/www/app/web-public-data
+      # external_data:
+      #   - src: "download"
+      #     dest: download
+      #   - src: "exchange"
+      #     dest: exchange
+      #   - src: "exchange_archive"
+      #     dest: exchange_archive
+      #   - src: "pays"
+      #     dest: pays
+      #   - src: "ipts"
+      #     dest: callback/wav
+      #   - src: "upload"
+      #     dest: upload
+
   children:
     cleversite_codes:
       vars:
@@ -62,8 +88,7 @@ all:
           ansible_ssh_host: cs-test-lb01.servicecloud.info
           is_balancer: True
           ws_ports:
-            - 6012       
-
+            - 6012
 
     cleversite_pult:
       vars:
@@ -110,46 +135,46 @@ all:
             dest: callback/wav
           - src: "{{app_data_path}}/upload"
             dest: upload
-        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"    
+        app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"
         app_current_env_path: "{{app_basepath}}/.env"
         webtemplate:
           app_basepath: /var/www/app/web-template
           app_path: "/var/www/app/web-template/{{app_release_name}}"
           app_current_path: "/var/www/app/web-template/current"
-          
+
       hosts:
         cs-test-lb01.servicecloud.info: {}
 
     cleversite_web_public:
       vars:
         phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
-        git_user: deploy_user
-        git_token: zAyvusLvrrJv_vPy94xN
-        app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/public-site.git"
-        app_basepath: /var/www/app/web-public
-        app_release_name: manual-deploy
-        app_release_commit: master
-        app_path: "{{app_basepath}}/{{app_release_name}}"
-        app_current_release_path: "/var/www/cleversite-web-public"
-        app_backup_release_path: "{{app_basepath}}/backup"
-        app_domain: cleversite.staging.local
-        app_data_path: "/var/www/app/web-public-data"        
-        app_external_data:
-          - src: "{{app_data_path}}/download"
-            dest: download
-          - src: "{{app_data_path}}/exchange"
-            dest: exchange
-          - src: "{{app_data_path}}/exchange_archive"
-            dest: exchange_archive
-          - src: "{{app_data_path}}/pays"
-            dest: pays          
-          - src: "{{app_data_path}}/ipts"
-            dest: callback/wav
-          - src: "{{app_data_path}}/upload"
-            dest: upload                
-        app_current_env_path: "{{app_basepath}}/.env"
         envfile_common: common-web-public.staging.env
-          
+        # git_user: deploy_user
+        # git_token: zAyvusLvrrJv_vPy94xN
+        # app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/public-site.git"
+        # app_basepath: /var/www/app/web-public
+        # app_release_name: manual-deploy
+        # app_release_commit: master
+        # app_path: "{{app_basepath}}/{{app_release_name}}"
+        # app_current_release_path: "/var/www/cleversite-web-public"
+        # app_backup_release_path: "{{app_basepath}}/backup"
+        # app_domain: cleversite.staging.local
+        # app_data_path: "/var/www/app/web-public-data"
+        # app_external_data:
+        #   - src: "{{app_data_path}}/download"
+        #     dest: download
+        #   - src: "{{app_data_path}}/exchange"
+        #     dest: exchange
+        #   - src: "{{app_data_path}}/exchange_archive"
+        #     dest: exchange_archive
+        #   - src: "{{app_data_path}}/pays"
+        #     dest: pays
+        #   - src: "{{app_data_path}}/ipts"
+        #     dest: callback/wav
+        #   - src: "{{app_data_path}}/upload"
+        #     dest: upload
+        # app_current_env_path: "{{app_basepath}}/.env"
+
       hosts:
         web-public-staging.servicecloud.info:
           ansible_ssh_host: cs-test-lb01.servicecloud.info
@@ -169,5 +194,3 @@ all:
       hosts:
         webapi-cs-test-lb01.servicecloud.info:
           ansible_ssh_host: cs-test-lb01.servicecloud.info
-
-
