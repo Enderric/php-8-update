@@ -3,6 +3,7 @@
   vars:
     deploy_src: "{{ app.deploy_src }}"
     deploy_path: "{{ app.base_path }}/releases/{{ release_name }}"
+    envfile_src: "{{ app.envfile_src}}"
 
 - import_tasks: build_crontab.yaml
   when: task is not defined or task == 'deploy'

@@ -5,6 +5,7 @@
   vars:
     app:
       deploy_src: "{{ app_deploy_src }}"
+      envfile_src: "{{ app_deploy_src }}/{{ app_envfile_src }}"
       base_path: "/var/www/app/call"
       active_release_path: "/var/www/call"
       crontab:

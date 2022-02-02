@@ -30,9 +30,14 @@
     group: apache
     recurse: yes
 
+- name: Выкладываю .env файл из {{envfile_src}}
+  copy:
+    dest: "{{ deploy_path }}/.env"
+    src: "{{envfile_src}}"
+
 - name: Дополняю envfile
   lineinfile:
-    path: "{{ deploy_path }}/www/.env"
+    path: "{{ deploy_path }}/.env"
     line: "{{ item }}"
     insertafter: EOF
   with_file: 
