@@ -11,13 +11,13 @@
       prefix: /var/www/
       base_path: /app/web-public
       namespace: "{{ app_namespace.replace('.','') if app_namespace is defined else '' }}"
-      data_path: "/var/www/app/web-public-data"
+      #data_path: "/var/www/app/web-public-data"
       active_release_path: "/cleversite-web-public"
       remove_dirs:
         - upload
         - docker
-        - .git
-      external_data_path: /var/www/app/web-public-data
+        - .git        
+      external_data_path: /var/www/app/web-public/data
       external_data:
         - src: "download"
           dest: download
