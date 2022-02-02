@@ -15,3 +15,7 @@
     owner: apache
     group: apache
     force: yes
+
+
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml
