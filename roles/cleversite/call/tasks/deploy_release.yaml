@@ -1,0 +1,40 @@
+- name: Подготавилваю файловую систему
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: '0755'
+  with_items:
+    - "{{ deploy_path }}"
+    - "{{ deploy_path }}/www"
+
+- name: Выкатываю релиз
+  synchronize:
+    src: "{{ deploy_src }}/"
+    dest: "{{ deploy_path }}/www"
+    use_ssh_args: yes
+    rsync_opts:
+      - "--exclude=.git"
+
+- name: Устанавливаю зависимости
+  shell: composer update -n && composer install -n 
+  args:
+    chdir: "{{ deploy_path }}/www"
+
+- name: Устанавливаю права доступа
+  file:
+    path: "{{ deploy_path }}/www"
+    state: directory
+    owner: apache
+    group: apache
+    recurse: yes
+
+- name: Дополняю envfile
+  lineinfile:
+    path: "{{ deploy_path }}/www/.env"
+    line: "{{ item }}"
+    insertafter: EOF
+  with_file: 
+    - "{{ envfile_common }}"
+

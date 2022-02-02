@@ -28,7 +28,7 @@ all:
       hosts:
         codes-staging:
           ansible_ssh_host: cs-testing01.servicecloud.info
-
+    
     cleversite_static:
       vars:
         git_user: deploy_user
@@ -167,5 +167,12 @@ all:
       hosts:
         webapi-cs-testing01.servicecloud.info:
           ansible_ssh_host: cs-testing01.servicecloud.info
+    
+    cleversite_call:
+      hosts:
+        call-cs-testing01.servicecloud.info:
+          ansible_ssh_host: cs-call01.servicecloud.info
+          ansible_host: cs-call01.servicecloud.info
+          phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
 
 

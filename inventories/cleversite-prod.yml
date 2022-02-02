@@ -10,7 +10,12 @@ all:
     envfile_common: common.prod.env
     envfile_local: .env.prod
     node_env: production
-  children:    
+  children:
+    cleversite_call:
+      vars:
+        phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
+      hosts:
+        cs-call01.servicecloud.info: {} 
     cleversite_web:
       vars:
         git_user: deploy_user

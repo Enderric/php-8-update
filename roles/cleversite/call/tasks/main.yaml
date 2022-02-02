@@ -1,0 +1,33 @@
+- import_tasks: deploy_release.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    deploy_src: "{{ app.deploy_src }}"
+    deploy_path: "{{ app.base_path }}/releases/{{ release_name }}"
+
+- import_tasks: build_crontab.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    deploy_path: "{{ app.base_path }}/releases/{{ release_name }}"
+    cronjob_log_directory: "/var/log/cleversite/call/cron"
+    crontab: "{{ app.crontab }}"
+
+- include_tasks: backup_current_release.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    current_release_path: "{{ app.active_release_path }}"
+    backup_release_path: "{{ app.base_path }}/releases/backup"
+
+- include_tasks: activate_release.yaml
+  when: task is not defined or task == 'deploy'
+  vars:
+    current_release_path: "{{ app.active_release_path }}"
+    release_path: "{{ app.base_path }}/releases/{{ release_name }}/www"
+
+- include_tasks: threadmanager_restart.yaml
+  when: task is not defined or task == 'deploy'
+
+- include_tasks: rollback_release.yaml
+  when: task is defined and task == 'rollback'
+  vars:
+    current_release_path: "{{ app.active_release_path }}"
+    backup_release_path: "{{ app.base_path }}/releases/backup"
