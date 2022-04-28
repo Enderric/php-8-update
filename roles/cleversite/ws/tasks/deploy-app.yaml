@@ -21,10 +21,27 @@
     creates: "{{ app_path }}/node_modules"
   become_user: apache
 
-- name: add envfile
-  copy:
-    dest: "{{ app_path }}/.env"
+#- name: add envfile
+#  copy:
+#    dest: "{{ app_path }}/.env"
+#    src: "{{ envfile }}"
+#    mode: "0644"
+#    owner: apache
+#    group: apache
+- name: Link envfile
+  file:
     src: "{{ envfile }}"
+    dest: "{{ app_path }}/.env"
+    state: "link"    
+    mode: "0644"
+    owner: apache
+    group: apache
+
+- name: Link logs directory
+  file:
+    src: "/var/log/cleversite/ws"
+    dest: "{{ app_path }}/log"
+    state: "link"
     mode: "0644"
     owner: apache
     group: apache

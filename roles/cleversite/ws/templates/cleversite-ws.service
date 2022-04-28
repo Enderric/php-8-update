@@ -4,7 +4,7 @@ After=network-online.target
 
 [Service]
 WorkingDirectory={{app_current_release_path}}
-ExecStart=/usr/bin/node --expose_gc --nouse-idle-notification worker.js %I
+ExecStart=/usr/bin/node --expose_gc --nouse-idle-notification --inspect=1%I worker.js %I
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 StandardOutput=syslog
