@@ -86,5 +86,18 @@
   with_file: 
     - "{{envfile_common}}"
 
-
+# Готовлю кронтаб для релиза
+- stat:
+    path: "{{ app_path }}/{{crontab_source}}"
+  register: cronfile
+- debug:
+    msg: "{{ crontab_source }} найден"
+- import_tasks: operations-with-cron.yaml
+  when: 
+    cronfile.stat.exists
+- debug:
+    msg: "{{ crontab_source }} не найден"
+  when: 
+    cronfile.stat.exists == False
+  
 

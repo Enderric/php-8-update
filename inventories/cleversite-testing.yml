@@ -22,7 +22,7 @@ all:
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/codes
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_release_name: deploy-test
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_domain: codes.cleversite.testing.local
       hosts:
@@ -38,7 +38,7 @@ all:
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/static
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_release_name: deploy-test
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_domain: static.cleversite.testing.local
       hosts:
@@ -54,7 +54,7 @@ all:
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/ws
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_release_name: deploy-test
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_domain: ws.cleversite.testing.local
       hosts:
@@ -73,7 +73,7 @@ all:
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: /var/www/pult
         app_backup_release_path: "{{app_basepath}}/backup"
-        app_release_name: master-12345
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_domain: pult.cleversite.testing.local
       hosts:
@@ -85,9 +85,11 @@ all:
         phpfpm_fcgi_socket: /var/run/php-fpm/php-fpm-www.sock
         git_user: deploy_user
         git_token: f-BLVAb9Dun5pkAVQiSj
+        crontab_source: "crontab.testing.yaml"
+        custom_crontab_files: "/var/spool/cron"
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/web.git"
         app_basepath: /var/www/app/web
-        app_release_name: manual-deploy
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: "/var/www/cleversite"
@@ -125,7 +127,7 @@ all:
         git_token: zAyvusLvrrJv_vPy94xN
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/public-site.git"
         app_basepath: /var/www/app/web-public
-        app_release_name: manual-deploy
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: "/var/www/cleversite-web-public"
@@ -158,7 +160,7 @@ all:
         git_token: 31UtXyw_S-So2up7Q-Uq
         app_git_repo: "https://{{git_user}}:{{git_token}}@gitlab.servicecloud.info/cleversite/api.git"
         app_basepath: /var/www/app/api_cleversite
-        app_release_name: master-12345
+        app_release_name: release-22-8-0-31619
         app_release_commit: master
         app_path: "{{app_basepath}}/{{app_release_name}}"
         app_current_release_path: "/var/www/api-cleversite"
