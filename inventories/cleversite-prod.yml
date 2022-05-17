@@ -47,6 +47,7 @@ all:
             dest: upload        
         app_template_dest: "{{app_path}}/bitrix/templates/cleversite_dec2020"
         app_current_env_path: "{{app_basepath}}/.env"
+        custom_crontab_files: "/var/spool/cron"
         crontab_source: .crontabs/prod.yaml
         webtemplate:
           app_basepath: /var/www/app/web-template          
