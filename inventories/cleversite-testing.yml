@@ -60,6 +60,8 @@ all:
       hosts:
         ws-staging:
           ansible_ssh_host: cs-testing01.servicecloud.info
+          ws_balancer: True
+          ws_worker: True
           ws_ports: 
             - 6012          
 
