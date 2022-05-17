@@ -18,3 +18,20 @@
 
 - name: Сбрасываю OpCache
   import_tasks: tasks/webserver/php-resetopcache.yml
+
+- stat:
+    path: "{{ app_backup_release_path }}/backup.crontab"
+  register: restore_file
+
+- debug:
+    msg: "{{ restore_file }}"
+
+- name: Восстанавливаю кронтаб из бэкапа
+  when: restore_file.stat.exists == True and restore_file.stat.isreg == True
+  file:
+    src: "{{restore_file.stat.lnk_target}}"
+    dest: "{{app_path}}/{{app_release_name}}"
+    state: link
+    owner: apache
+    group: apache
+    force: yes

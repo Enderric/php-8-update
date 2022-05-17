@@ -15,6 +15,25 @@
     owner: apache
     group: apache
 
-
 - name: Сбрасываю OpCache
   import_tasks: tasks/webserver/php-resetopcache.yml
+
+- stat:
+   path: "{{ app_basepath }}/{{ app_release_name }}.crontab"
+  register: cronfile_stat
+
+- debug:
+    msg: "{{ crontab_source }} найден, делаем симлинк"
+
+- name: Делаю симлинк кронтаба
+  when: cronfile_stat.stat.exists == True and cronfile_stat.stat.islnk == False
+  file:
+    src: "{{ app_basepath }}/{{ app_release_name }}.crontab"
+    dest: "{{custom_crontab_files}}/apache"
+    state: link
+    owner: apache
+    group: apache
+
+- debug:
+    msg: "{{ crontab_source }} не найден"
+  when: cronfile_stat.stat.exists == False

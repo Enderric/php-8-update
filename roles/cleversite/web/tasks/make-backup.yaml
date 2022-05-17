@@ -51,3 +51,29 @@
     owner: apache
     group: apache
     force: yes
+
+- stat:
+   path: "{{ custom_crontab_files }}/apache"
+  register: current_cron_stat
+
+- debug:
+    msg: "{{current_cron_stat}}"
+
+- name: Делаю бэкап активного кронтаба если он симлинк
+  when: current_cron_stat.stat.exists == True and current_cron_stat.stat.islnk == True
+  file:
+    src: "{{ current_cron_stat.stat.lnk_target }}"
+    dest: "{{ app_backup_release_path }}/backup.crontab"
+    state: link
+    owner: apache
+    group: apache
+    force: yes
+
+- name: Делаю бэкап активного кронтаба если файл регулярный
+  when: current_cron_stat.stat.exists == True and current_cron_stat.stat.isreg == True
+  copy:
+    src: "{{ custom_crontab_files }}/apache"
+    dest: "{{ app_backup_release_path }}/backup.crontab"
+    remote_src: True
+    owner: apache
+    group: apache
