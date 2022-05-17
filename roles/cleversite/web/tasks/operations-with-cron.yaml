@@ -1,20 +1,20 @@
-- name: Чтение из "{{crontab_source}}"
+- name: Чтение из {{crontab_source}}
   command: cat "{{ app_path }}/{{crontab_source}}"
   register: crontab_content
 
 - name: Создание .crontab
   cron:
-    cron_file: "{{app_basepath}}/.crontab"
+    cron_file: "{{app_basepath}}/{{app_release_name}}.crontab"
     job: php {{app_current_release_path}}/{{item.script}} >> {{item.log}}
     name: "{{ item.description }}"
-    minute: "{{ item.minute }}"
+    minute: "{{s item.minute }}"
     hour: "{{ item.hour | default('*')}}"
     day: "{{ item.day | default('*') }}"
     weekday: "{{ item.weekday | default('*') }}"
     month: "{{ item.month | default('*') }}"
     state: present
     user: apache
-  with_items: "{{ crontab_content.stdout | from_yaml }}"
+    with_items: "{{ crontab_content.stdout | from_yaml }}"
 
 - name: Изменение прав доступа
   file:

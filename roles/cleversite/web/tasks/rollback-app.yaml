@@ -29,7 +29,7 @@
 - name: Восстанавливаю кронтаб из бэкапа
   when: restore_file.stat.exists == True and restore_file.stat.isreg == True
   file:
-    src: "{{restore_file.stat.isreg}}"
+    src: "{{restore_file.stat.lnk_target}}"
     dest: "{{app_path}}/{{app_release_name}}"
     state: link
     owner: apache

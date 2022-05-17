@@ -99,5 +99,3 @@
     msg: "{{ crontab_source }} не найден"
   when: 
     cronfile.stat.exists == False
-  
-
