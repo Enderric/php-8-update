@@ -18,7 +18,7 @@
 
 - name: Изменение прав доступа
   file:
-    path: "{{app_basepath}}/.crontab"
+    path: "{{app_basepath}}/{{app_release_name}}.crontab"
     state: file
     mode: 0660
     owner: apache
