@@ -19,6 +19,7 @@
 - name: Сбрасываю OpCache
   import_tasks: tasks/webserver/php-resetopcache.yml
 
+# Восстановление заданий cron
 - stat:
     path: "{{ app_basepath }}/backup.crontab"
   register: restore_file
@@ -27,17 +28,17 @@
     msg: "{{ restore_file }}"
 
 
-- name: Восстанавливаю кронтаб из бэкапа если симлинк
+- name: Восстанавливаю кронтаб из бэкапа если он симлинк
   when: restore_file.stat.exists == True and restore_file.stat.islnk == True
   file:
     src: "{{restore_file.stat.lnk_target}}"
-    dest: "{{app_path}}/{{app_release_name}}"
+    dest: "{{custom_crontab_files}}/apache"
     state: link
     owner: apache
     group: apache
     force: yes
 
-- name: Восстанавливаю кронтаб из бэкапа если файл регулярный
+- name: Восстанавливаю кронтаб из бэкапа если он регулярный файл
   when: restore_file.stat.exists and restore_file.stat.isreg
   copy:
     src: "{{ app_basepath }}/backup.crontab"
