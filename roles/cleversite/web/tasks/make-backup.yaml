@@ -63,7 +63,7 @@
   when: current_cron_stat.stat.exists == True and current_cron_stat.stat.islnk == True
   file:
     src: "{{ current_cron_stat.stat.lnk_target }}"
-    dest: "{{ app_backup_release_path }}/backup.crontab"
+    dest: "{{ app_basepath }}/backup.crontab"
     state: link
     owner: apache
     group: apache
@@ -73,7 +73,7 @@
   when: current_cron_stat.stat.exists == True and current_cron_stat.stat.isreg == True
   copy:
     src: "{{ custom_crontab_files }}/apache"
-    dest: "{{ app_backup_release_path }}/backup.crontab"
+    dest: "{{ app_basepath }}/backup.crontab"
     remote_src: True
     owner: apache
     group: apache
