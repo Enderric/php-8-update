@@ -21,17 +21,18 @@
     creates: "{{ app_path }}/node_modules"
   become_user: apache
 
-#- name: add envfile
-#  copy:
-#    dest: "{{ app_path }}/.env"
-#    src: "{{ envfile }}"
-#    mode: "0644"
-#    owner: apache
-#    group: apache
-- name: Link envfile
-  file:
+- name: add envfile
+  copy:
     src: "{{ envfile }}"
     dest: "{{ app_path }}/.env"
+    mode: "0644"
+    owner: apache
+    group: apache
+
+- name: Link envfile
+  file:
+    src: "{{ app_path }}/.env"
+    dest: "{{ envfile }}"
     state: "link"    
     mode: "0644"
     owner: apache
