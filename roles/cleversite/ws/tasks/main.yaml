@@ -1,2 +1,2 @@
-- include_tasks: deploy-app.yaml
+- import_tasks: deploy-app.yaml
   when: ws_balancer == False and ws_worker == True
