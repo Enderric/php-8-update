@@ -46,7 +46,7 @@
     src: "/var/log/cleversite/ws"
     dest: "{{ app_path }}/log"
     state: "link"
-    mode: "0644"
+    mode: "0775"
     owner: apache
     group: apache
 
