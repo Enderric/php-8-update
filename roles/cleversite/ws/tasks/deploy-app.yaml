@@ -13,9 +13,10 @@
     version: "{{ app_release_commit }}"
     force: yes
 
-- name: Конфигурирование npm репозитория
+- name: Конфигурирование npm репозитория  
   shell: npm set registry http://npm.servicecloud.info:8080
-  
+  become_user: apache
+
 - name: Install modules
   shell: npm install
   args:
