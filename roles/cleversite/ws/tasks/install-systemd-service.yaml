@@ -13,3 +13,15 @@
     enabled: yes
     state: restarted
   with_items: "{{ ws_ports }}"
+
+- pause:
+    seconds: 5
+
+- name: Собираем информацию о состоянии службы
+  service_facts: 
+
+- name: Проверка работы службы cleversite-ws@.service
+  debug:
+    msg: "{{services['cleversite-ws@' ~ item ~ '.service']}}"
+  failed_when: services['cleversite-ws@' ~ item ~ '.service'].state != 'running'
+  with_items: "{{ ws_ports }}"
