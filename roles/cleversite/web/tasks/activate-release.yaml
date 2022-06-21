@@ -33,7 +33,8 @@
     state: link
     owner: apache
     group: apache
-
+    force: yes
+    
 - debug:
     msg: "{{ crontab_source }} не найден"
   when: cronfile_stat.stat.exists == False
