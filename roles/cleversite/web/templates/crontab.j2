@@ -1,6 +1,6 @@
 {% for item in cronjobs %}
 # {{item.description}}
-{{item.minute | default('*')}} {{item.hour | default('*')}}   {{item.day | default('*')}} {{item.month | default('*')}} {{item.weekday | default('*')}}    php {{item.script}} >> {{item.log}}
+{{item.minute | default('*')}} {{item.hour | default('*')}}   {{item.day | default('*')}} {{item.month | default('*')}} {{item.weekday | default('*')}}    php {{app_base_path}}{{item.script}} >> {{item.log}}
 
 {% endfor %}
 
