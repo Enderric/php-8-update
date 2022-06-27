@@ -1,6 +1,15 @@
 {% for item in cronjobs %}
-# {{item.description}}
-{{item.minute | default('*')}} {{item.hour | default('*')}}   {{item.day | default('*')}} {{item.month | default('*')}} {{item.weekday | default('*')}}    php {{app_base_path}}/{{item.script}} >> {{item.log}}
-
+    {% set log = "/dev/null" %}
+    {% if 'log' in item %}
+        {% set log = item.log %}
+    {% endif %}
+    {%if item.is_command %}
+        # {{item.description}}
+        {{item.minute | default('*')}} {{item.hour | default('*')}}   {{item.day | default('*')}} {{item.month | default('*')}} {{item.weekday | default('*')}}    {{item.script}} >> {{log}}
+        {{item.script}} >> {{log}}
+    {% else %}
+        # {{item.description}}
+        {{item.minute | default('*')}} {{item.hour | default('*')}}   {{item.day | default('*')}} {{item.month | default('*')}} {{item.weekday | default('*')}}    php {{app_base_path}}/{{item.script}} >> {{log}}
+        php {{app_base_path}}/{{item.script}} >> {{log}}
+    {% endif %}
 {% endfor %}
-
