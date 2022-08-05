@@ -22,7 +22,7 @@ publish:
     - docker tag $DOCKERHUB/cleversite-deploy:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID $DOCKERHUB/cleversite-deploy:latest
     - docker push $DOCKERHUB/cleversite-deploy:latest
 
-load-balancers:
+prod-load-balancers:
   stage: prod
   image: $DOCKERHUB/cleversite-deploy:latest
   tags: [docker]
