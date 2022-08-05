@@ -1,6 +1,7 @@
 stages:
   - build
   - publish
+  - prod
 
 build:
   stage: build
@@ -20,3 +21,13 @@ publish:
     - docker pull $DOCKERHUB/cleversite-deploy:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
     - docker tag $DOCKERHUB/cleversite-deploy:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID $DOCKERHUB/cleversite-deploy:latest
     - docker push $DOCKERHUB/cleversite-deploy:latest
+
+load-balancers:
+  stage: prod
+  image: $DOCKERHUB/cleversite-deploy:latest
+  tags: [docker]
+  when: manual
+  only:
+    - master
+  script:
+    - ansible-playbook -i inventories/cleversite-prod.yml load-balancers.yaml
