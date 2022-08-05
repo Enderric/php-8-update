@@ -1,0 +1,13 @@
+- name: Deploy nginx configs
+  copy:
+    src: "{{ansible_hostname}}/nginx/{{item}}"
+    dest: "/etc/nginx/conf.d/{{item}}"
+  with_items: "{{nginx_configs}}"
+
+- name: Test nginx configs
+  shell:
+    cmd: "nginx -t"
+
+#- name: Reload nginx
+#  shell:
+#    cmd: "nginx -s reload"

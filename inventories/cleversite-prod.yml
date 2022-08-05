@@ -88,6 +88,23 @@ all:
       hosts:
         cs-web02.servicecloud.info: {}        
 
+    lb:
+      hosts:
+        cs-lb01.servicecloud.info:
+          nginx_configs:
+            - cleversite.ru.conf
+            - api.cleversite.ru.conf
+            - personal.cleversite.ru.conf
+            - static01.cleversite.ru.conf
+        cs-lb02.servicecloud.info:
+          nginx_configs:
+            - app.cleversite.ru.conf 
+            - clients.conf
+            - pult.conf
+            - widget.cleversite.ru.conf
+            - chatapi.conf
+            - codes.conf
+            - release.conf
 
     cleversite_ws:
       vars:
