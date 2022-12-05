@@ -22,6 +22,19 @@
   shell: composer install -n --no-dev
   args:
     chdir: "{{app_path}}/cleversite"
+  when: php_v == '7.2'
+
+- name: Устанавливаю зависимости
+  shell: docker exec -it cleversite-services_php-fpm_1 composer install -n --no-dev --working-dir={{app_path}}/cleversite
+  args:
+    chdir: "{{app_path}}/cleversite"
+  when: php_v == '7.4'
+
+- name: Устанавливаю зависимости
+  shell: docker exec -it cleversite-services_php-fpm_1 composer install -n --no-dev --working-dir={{app_path}}/cleversite
+  args:
+    chdir: "{{app_path}}/cleversite"
+  when: php_v == '8.0'
 
 - name: Удаляю ненужные директории
   file:

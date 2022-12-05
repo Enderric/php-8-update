@@ -17,6 +17,15 @@
 
 - name: Сбрасываю OpCache
   import_tasks: tasks/webserver/php-resetopcache.yml
+  when: php_v == '7.2'
+
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml
+  when: php_v == '7.4'
+
+- name: Сбрасываю OpCache
+  import_tasks: tasks/webserver/php-resetopcache.yml
+  when: php_v == '8.0'
 
 - stat:
    path: "{{ app_basepath }}/{{ app_release_name }}.crontab"

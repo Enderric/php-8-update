@@ -5,4 +5,12 @@
 
 - name: Reset opcache
   shell: "php /usr/local/bin/cachetool.phar opcache:reset --fcgi={{phpfpm_fcgi_socket}}"
-   
+  when: php_v == '7.2'
+
+- name: Reset opcache
+  shell: "docker exec -it cleversite-services_php-fpm_1 php /usr/local/bin/cachetool610.phar opcache:reset --fcgi=/run/php-fpm/www.sock"
+  when: php_v == '7.4'
+
+- name: Reset opcache
+  shell: "docker exec -it cleversite-services_php-fpm_1 php /usr/local/bin/cachetool810.phar opcache:reset --fcgi=/run/php-fpm/www.sock"
+  when: php_v == '8.0'  
