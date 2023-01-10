@@ -1,9 +1,0 @@
-{% for item in cronjobs %}    
-    {%if "is_command" in item and item.is_command %}
-        {% set command_prefix = "" %}
-    {% else %}
-        {% set command_prefix = "php " ~ app_base_path %}
-    {% endif %}
-# {{item.description}}
-{{item.minute | default('*')}} {{item.hour | default('*')}}   {{item.day | default('*')}} {{item.month | default('*')}} {{item.weekday | default('*')}}   {{command_prefix}}{{item.script}} >> {{item.log | default("/dev/null") }}
-{% endfor %}
