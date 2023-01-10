@@ -1,6 +1,0 @@
-- file:
-    state: directory
-    path: /var/log/cleversite
-    mode: "0777"
-    owner: apache
-    group: apache

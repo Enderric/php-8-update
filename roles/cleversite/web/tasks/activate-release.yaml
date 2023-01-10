@@ -1,11 +1,3 @@
-- name: Включаю .env
-  file:
-    src: "{{app_basepath}}/{{app_release_name}}.env"
-    dest: "{{app_basepath}}/.env"
-    state: link
-    owner: apache
-    group: apache
-    force: yes
 
 - name: Включаю новый релиз
   file:
@@ -34,16 +26,3 @@
 - debug:
     msg: "{{ crontab_source }} найден, делаем симлинк"
 
-- name: Делаю симлинк кронтаба
-  when: cronfile_stat.stat.exists == True and cronfile_stat.stat.islnk == False
-  file:
-    src: "{{ app_basepath }}/{{ app_release_name }}.crontab"
-    dest: "{{custom_crontab_files}}/apache"
-    state: link
-    owner: apache
-    group: apache
-    force: yes
-    
-- debug:
-    msg: "{{ crontab_source }} не найден"
-  when: cronfile_stat.stat.exists == False

@@ -4,19 +4,16 @@
     - role: cleversite/web
       vars:
         php_v: '7.2'
-      # when: php_v == '7.2'
       tags: php_v_7.2
 
     - role: cleversite/web
       vars:
         php_v: '7.4'
-      # when: php_v == '7.4'
       tags: php_v_7.4
     
     - role: cleversite/web
       vars:
         php_v: '8.0'
-      # when: php_v == '8.0'
       tags: php_v_8.0
 
    

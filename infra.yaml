@@ -1,4 +1,0 @@
-- hosts:
-    - cleversite_web
-  roles:
-    - infra/webserver

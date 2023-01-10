@@ -1,3 +1,0 @@
-- hosts: web-mobile
-  roles:
-  - cleversite/web-mobile

@@ -1,8 +1,0 @@
-- description: some script
-  minute: "*/3"
-  hour: "06"
-  day: "*"
-  weekday: "0-6"
-  month: "*"
-  script: cleversite/system/cron/useless_cron_task.php 
-  log:  /var/log/cleversite/system/myjob.log

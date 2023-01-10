@@ -1,4 +1,0 @@
-- hosts:
-  - cleversite_ws
-  roles:
-  - cleversite/ws

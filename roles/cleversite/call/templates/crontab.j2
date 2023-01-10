@@ -1,3 +1,0 @@
-{% for task in crontab %}
-{{ task.cron }}     php {{ task.script }} >> {{ cronjob_log_directory }}/{{ task.logfile }}
-{% endfor %}

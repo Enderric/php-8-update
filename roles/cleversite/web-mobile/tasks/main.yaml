@@ -1,3 +1,0 @@
-- name: Deploy app
-  include_tasks: deploy-app.yaml
-

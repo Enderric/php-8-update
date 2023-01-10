@@ -1,4 +1,0 @@
-- hosts:
-  - cleversite_web_public
-  roles:
-  - cleversite/website-template

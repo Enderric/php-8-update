@@ -1,3 +1,0 @@
-- import_tasks: install_nginx.yaml
-- import_tasks: install_phpfpm.yaml
-- import_tasks: install_git.yaml

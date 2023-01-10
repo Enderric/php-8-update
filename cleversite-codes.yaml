@@ -1,4 +1,0 @@
-- hosts:
-  - cleversite_codes
-  roles:
-  - cleversite/codes

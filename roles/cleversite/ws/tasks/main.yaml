@@ -1,2 +1,0 @@
-- import_tasks: deploy-app.yaml
-  when:  ws_worker == True
